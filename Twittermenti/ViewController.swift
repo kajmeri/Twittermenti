@@ -15,16 +15,18 @@ class ViewController: UIViewController {
 
 	@IBOutlet weak var sentimentLabel: UILabel!
 	@IBOutlet weak var textField: UITextField!
-
-	let swifter = Swifter(consumerKey: "Ejw3fxwNNMhgSfLCUGASUEUUH", consumerSecret: "9fRLibViateClhjBoGhvYuZQ4CZVzuKVkqIB6TMX88MXC4i3zz")
-
+	
+	let keys = Keys()
+	
 	let sentimentClassifier = TweetSentimentClassifier()
 
 	let tweetCount = 100
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
+		
+		print(keys.apiKey)
+		
 	}
 
 	@IBAction func predictPressed(_ sender: UIButton) {
@@ -35,6 +37,7 @@ class ViewController: UIViewController {
 
 	func fetchTweets() {
 		if let searchText = textField.text {
+			let swifter = Swifter(consumerKey: keys.apiKey, consumerSecret: keys.apiSecret)
 
 			swifter.searchTweet(using: searchText, lang: "en", count: tweetCount, tweetMode: .extended, success: { (results, metadata) in
 
